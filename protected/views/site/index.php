@@ -4,17 +4,34 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
+<h1>Informações Extras</h1>
 
-<p>Congratulations! You have successfully created your Yii application.</p>
+<h4>Abaixo é um exemplo de como acessar od dados do usuário logado.</h4>
+<p>Acesse o sistema com os usuarios/senhas:</p>
 
-<p>You may change the content of this page by modifying the following two files:</p>
 <ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
+	<li>admin/admin</li>
+	<li>vendedor/vendedor</li>
 </ul>
 
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<hr>
+
+<?php if( !Yii::app()->user->isGuest ): ?>
+	<p>
+		Usuário logado:	<?php echo isset(Yii::app()->user->nome) ? Yii::app()->user->nome : null; ?>
+	</p>
+
+	<?php echo Yii::app()->user->isADMIN() ? "Sou um administrador." : "Sou um Vendedor" ?>
+
+	<ul>
+		<li>user: <?php echo isset(Yii::app()->user->user) ? Yii::app()->user->user : null; ?></li>
+		<li>nome: <?php echo isset(Yii::app()->user->nome) ? Yii::app()->user->nome : null; ?></li>
+		<li>email: <?php echo isset(Yii::app()->user->email) ? Yii::app()->user->email : null; ?></li>
+		<li>id grupo: <?php echo isset(Yii::app()->user->id_grupo) ? Yii::app()->user->id_grupo : null; ?></li>
+	</ul>
+
+<?php else: ?>
+
+	<p>Voce ainda nao esta logado.</p>
+
+<?php endif ?>

@@ -32,6 +32,18 @@
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
+
+
+				// Exemplos de criacao de menu ( apenas oculta )
+				// novo menu visivel apenas para administrador
+				array('label'=>'VisivelSomenteParaAdmin', 'url'=>array('/usuario/index'), 'visible' => Yii::app()->user->isAdmin() ),
+
+				// novo menu adicionado
+				array('label'=>'VisivelSomenteParaVendedor', 'url'=>array('/usuario/index'), 'visible' => Yii::app()->user->isVendedor() ),
+
+				// nvo menu adicionado restrita
+				array('label'=>'RestritaParaVendedor', 'url'=>array('/usuario/admin')),
+
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
