@@ -41,8 +41,12 @@
 				// novo menu adicionado
 				array('label'=>'VisivelSomenteParaVendedor', 'url'=>array('/usuario/index'), 'visible' => Yii::app()->user->isVendedor() ),
 
-				// nvo menu adicionado restrita
+				// novo menu adicionado restrita
 				array('label'=>'RestritaParaVendedor', 'url'=>array('/usuario/admin')),
+
+				// novo menu adicionado
+				array('label'=>'VisivelSomenteParaViewer', 'url'=>array('/usuario/index'), 'visible' => Yii::app()->user->isViewer() ),
+
 
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)

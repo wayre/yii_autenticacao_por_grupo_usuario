@@ -209,6 +209,60 @@ Foi feito algumas alterações aqui para validar o usuário vindo do banco mysql
 +}
  ```
 
+####Exemplo de como criar mais um nível de acesso 
+
+
+Caso quisesse adicionar mais um nível de acesso `'VIEWER'` apenas faria o sequinte:
+
+#### protected/components/WebUser.php
+```php
+    const ADMIN = 1;
+     const VENDEDOR = 2;
++    const VIEWER = 3;
+ 
+  public function isAdmin(){
+    return Yii::app()->user->getState("grupo_usuario") == self::ADMIN ? true : false;
+@@ -15,4 +16,8 @@ class WebUser extends CWebUser{
+    return Yii::app()->user->getState("grupo_usuario") == self::VENDEDOR ? true : false;
+  }
+ 
++ public function isViewer(){
++   return Yii::app()->user->getState("grupo_usuario") == self::VIEWER ? true : false;
++ }
++
+ }
+```
+
+Abaixo vamos dar permissão ao novo grupo `viewer` a pagina admin.
+
+#### protected/controllers/UsuarioController.php
+```php
+      ),
+      array('allow', // allow admin and viewer user to perform 'admin' and 'delete' actions
+        'actions'=>array('admin','delete'),
+-       'users'=>array('admin'),
++       'users'=>array('admin','viewer'),
+      ),
+      array('deny',  // deny all users
+        'users'=>array('*'),
+```
+
+Vamos aumentar o menu principal com mais um elemento somente para testar  o `Yii::app()->user->isViewer()`
+
+#### protected/views/layouts/main.php
+```php
+        // novo menu adicionado restrita
+        array('label'=>'RestritaParaVendedor', 'url'=>array('/usuario/admin')),
+ 
++       // novo menu adicionado
++       array('label'=>'VisivelSomenteParaViewer', 'url'=>array('/usuario/index'), 'visible' => Yii::app()->user->isViewer() ),
++
++
+        array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+        array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+      ),
+```
+
 #####Para finalizar é possível acessar os dados do usuário logado desta forma:
 
 ```php
